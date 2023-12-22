@@ -28,4 +28,4 @@ jobs:
       env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-          npm exec electron-builder -- --publish always --win --mac --linux
+          run: npx electron-builder --win --linux 
