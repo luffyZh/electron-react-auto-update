@@ -19,14 +19,13 @@ jobs:
         node-version: 14
         
     - name: Install and build
-    run: |
-          npm install
-          npm run postinstall
-          npm run build
-
-    - name: Publish releases
-        env:
-          # This is used for uploading release assets to github
+      run: |
+            npm install
+            npm run postinstall
+            npm run build
+  
+    - name: Publish release
+      env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
+      run: |
           npm exec electron-builder -- --publish always --win --mac --linux
