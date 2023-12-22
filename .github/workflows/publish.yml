@@ -27,36 +27,7 @@ jobs:
     - name: Build Application
       run: npm run build
 
-    - name: Package Application
-      run: npx electron-builder --win --linux 
-
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-
-    - name: Upload Linux Artifact
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./dist/app.AppImage
-        asset_name: app.AppImage
-        asset_content_type: application/x-executable
-
-    - name: Upload Windows Artifact
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}  
-        asset_path: ./dist/app.exe
-        asset_name: app.exe
-        asset_content_type: application/x-msdownload
+    - env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+      run: |
+        npx electron-builder --win --linux --publish always
