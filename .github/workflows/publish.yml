@@ -36,8 +36,9 @@ jobs:
     - name: Create Release Tag
       id: create_tag
       uses: actions/github-script@v6
+      env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
           const { data } = await github.git.createTag({
             ...context.repo,
@@ -52,7 +53,7 @@ jobs:
       id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.create_tag.outputs.sha }}
         release_name: Release ${{ github.run_number }}
@@ -62,7 +63,7 @@ jobs:
     - name: Upload Linux Build 
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
         asset_path: ./dist/app.AppImage
