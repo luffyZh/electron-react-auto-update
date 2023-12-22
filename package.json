@@ -171,8 +171,8 @@
     "webpack-merge": "^5.9.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "ElectronReactAutoUpdate",
+    "appId": "org.erb.ElectronReactAutoUpdate",
     "electronVersion": "26.2.1",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
@@ -206,9 +206,6 @@
       "owner": "electron-react-boilerplate",
       "repo": "electron-react-boilerplate"
     }
-  },
-  "collective": {
-    "url": "https://opencollective.com/electron-react-boilerplate-594"
   },
   "devEngines": {
     "node": ">=14.x",
