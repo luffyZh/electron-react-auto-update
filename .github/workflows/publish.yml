@@ -1,4 +1,4 @@
-name: Publish 
+name: Build and Release
 
 on: 
   push:
@@ -7,24 +7,56 @@ on:
 
 jobs:
 
-  publish:
-
+  build:
     runs-on: ubuntu-latest
-    
+
     steps:
+    - uses: actions/checkout@v2
     
-    - uses: actions/checkout@v3
-      
-    - uses: actions/setup-node@v3
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with: 
+        node-version: 14
+    
+    - name: Install Electron  
+      run: npx electron-builder install-app-deps
+    
+    - name: Install Dependencies
+      run: npm install
+    
+    - name: Build Application
+      run: npm run build
+
+    - name: Package Application
+      run: npx electron-builder --win --linux 
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        node-version: 16
-        cache: 'npm'
-        
-    - run: npm install
-      
-    - run: npm run build
-        
-    - env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
-      run: |
-        npx electron-builder --win --linux --publish always
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Linux Artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: ./dist/app.AppImage
+        asset_name: app.AppImage
+        asset_content_type: application/x-executable
+
+    - name: Upload Windows Artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}  
+        asset_path: ./dist/app.exe
+        asset_name: app.exe
+        asset_content_type: application/x-msdownload
