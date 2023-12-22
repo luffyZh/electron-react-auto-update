@@ -17,17 +17,16 @@ jobs:
       uses: actions/setup-node@v2
       with: 
         node-version: 14
-    
-    - name: Install Electron  
-      run: npx electron-builder install-app-deps
-    
-    - name: Install Dependencies
-      run: npm install
-    
-    - name: Build Application
-      run: npm run build
+        
+    - name: Install and build
+    run: |
+          npm install
+          npm run postinstall
+          npm run build
 
-    - env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
-      run: |
-        npx electron-builder --win --linux --publish always
+    - name: Publish releases
+        env:
+          # This is used for uploading release assets to github
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm exec electron-builder -- --publish always --win --mac --linux
