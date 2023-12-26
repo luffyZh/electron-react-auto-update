@@ -2,7 +2,12 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example';
+export type Channels =
+  | 'ipc-example'
+  | 'app-update'
+  | 'update'
+  | 'downloaded'
+  | 'update-available';
 
 const electronHandler = {
   ipcRenderer: {
@@ -21,6 +26,9 @@ const electronHandler = {
     once(channel: Channels, func: (...args: unknown[]) => void) {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
+    toInstall: () => ipcRenderer.invoke('install'),
+    onUpdate: (callback: any) => ipcRenderer.on('update', callback),
+    onDownloaded: (callback: any) => ipcRenderer.on('downloaded', callback),
   },
 };
 

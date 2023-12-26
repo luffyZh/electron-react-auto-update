@@ -10,20 +10,28 @@
  */
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
+import electronDebug from 'electron-debug';
+// import { autoUpdater } from 'electron-updater';
+import logger from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { autoUpdateInit } from './app-update';
+// import checkUpdate from './auto-update';
 
-class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
+electronDebug({ showDevTools: true });
 
 let mainWindow: BrowserWindow | null = null;
+
+logger.transports.file.resolvePath = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+
+  const filename = `${year}_${month}_${day}.log`;
+
+  return path.join(app.getPath('logs'), filename);
+};
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -98,6 +106,9 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
+  // 检测更新
+  // checkUpdate(mainWindow, ipcMain);
+
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
@@ -107,9 +118,12 @@ const createWindow = async () => {
     return { action: 'deny' };
   });
 
+  // 打开 devtool
+  mainWindow.webContents.openDevTools();
+
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
-  new AppUpdater();
+  // new AppUpdater();
 };
 
 /**
@@ -128,6 +142,7 @@ app
   .whenReady()
   .then(() => {
     createWindow();
+    autoUpdateInit();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.

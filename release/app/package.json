@@ -3,11 +3,6 @@
   "version": "0.1.0",
   "description": "A foundation for scalable desktop apps",
   "license": "MIT",
-  "author": {
-    "name": "Electron React Boilerplate Auto Upgrade",
-    "email": "zhoudeyou945@126.com",
-    "url": "https://github.com/luffyZh/electron-react-auto-update"
-  },
   "main": "./dist/main/main.js",
   "scripts": {
     "rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",

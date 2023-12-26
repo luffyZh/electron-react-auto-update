@@ -11,27 +11,7 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
-  "bugs": {
-    "url": "https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
-  },
   "license": "MIT",
-  "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
-  },
-  "contributors": [
-    {
-      "name": "Amila Welihinda",
-      "email": "amilajack@gmail.com",
-      "url": "https://github.com/amilajack"
-    }
-  ],
   "main": "./src/main/main.ts",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
@@ -98,10 +78,11 @@
   "dependencies": {
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
-    "electron-updater": "^6.1.4",
+    "electron-updater": "^6.1.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.16.0",
+    "update-electron-app": "^3.0.0"
   },
   "devDependencies": {
     "@electron/notarize": "^2.1.0",
@@ -202,9 +183,8 @@
       "./assets/**"
     ],
     "publish": {
-      "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "provider": "generic",
+      "url": "http://10.88.115.7:8099/electron-react-auto-update/win32/"
     }
   },
   "devEngines": {
