@@ -140,7 +140,11 @@ app
   .whenReady()
   .then(() => {
     createWindow();
+<<<<<<< HEAD
     autoUpdateApp();
+=======
+    autoUpdateInit(mainWindow as BrowserWindow);
+>>>>>>> 985e4fd (feat: initial project)
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.

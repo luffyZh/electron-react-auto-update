@@ -6,7 +6,9 @@ export type Channels =
   | 'ipc-example'
   | 'app-update'
   | 'update'
+  | 'download-progress'
   | 'downloaded'
+  | 'update-downloaded'
   | 'update-available';
 
 const electronHandler = {
