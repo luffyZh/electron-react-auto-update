@@ -11,13 +11,25 @@
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import electronDebug from 'electron-debug';
+import logger from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { autoUpdateInit } from './app-update';
+import { autoUpdateApp } from './app-update';
 
 electronDebug({ showDevTools: false });
 
 let mainWindow: BrowserWindow | null = null;
+
+logger.transports.file.resolvePath = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+
+  const filename = `${year}_${month}_${day}.log`;
+
+  return path.join(app.getPath('logs'), filename);
+};
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -128,7 +140,7 @@ app
   .whenReady()
   .then(() => {
     createWindow();
-    autoUpdateInit();
+    autoUpdateApp();
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
