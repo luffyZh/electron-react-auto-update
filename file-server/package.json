@@ -1,0 +1,13 @@
+{
+  "name": "electron-file-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "pm2": "^5.3.0"
+  },
+  "scripts": {
+    "start": "pm2 start pm2.config.js"
+  }
+}

@@ -13,6 +13,10 @@
   ],
   "license": "MIT",
   "main": "./src/main/main.ts",
+  "author": {
+    "name": "luffyZh",
+    "email": "zhoudeyou945@126.com"
+  },
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
     "build:dll": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
@@ -26,6 +30,7 @@
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
+    "start:file-server": "cd file-server && npm run start",
     "test": "jest"
   },
   "browserslist": [],
@@ -184,7 +189,7 @@
     ],
     "publish": {
       "provider": "generic",
-      "url": "http://10.88.115.7:8099/electron-react-auto-update/win32/"
+      "url": "http://localhost:8099/packages/win32/"
     }
   },
   "devEngines": {

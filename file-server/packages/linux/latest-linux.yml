@@ -1,0 +1,9 @@
+version: 0.3.6
+files:
+  - url: ElectronReactAutoUpdate-0.3.6.AppImage
+    sha512: QJivw5Q7GWfCfZDZbnyC7mCp0lBMfp0wZuN7SePiMnEoCzIH2OBjPIl4KmRAdKFop75zPVwh8n/0HBWdsOaj0A==
+    size: 100384154
+    blockMapSize: 105902
+path: ElectronReactAutoUpdate-0.3.6.AppImage
+sha512: QJivw5Q7GWfCfZDZbnyC7mCp0lBMfp0wZuN7SePiMnEoCzIH2OBjPIl4KmRAdKFop75zPVwh8n/0HBWdsOaj0A==
+releaseDate: '2023-12-27T02:23:28.915Z'

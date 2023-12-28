@@ -11,27 +11,13 @@
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import electronDebug from 'electron-debug';
-// import { autoUpdater } from 'electron-updater';
-import logger from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { autoUpdateInit } from './app-update';
-// import checkUpdate from './auto-update';
 
-electronDebug({ showDevTools: true });
+electronDebug({ showDevTools: false });
 
 let mainWindow: BrowserWindow | null = null;
-
-logger.transports.file.resolvePath = () => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
-  const day = now.getDate();
-
-  const filename = `${year}_${month}_${day}.log`;
-
-  return path.join(app.getPath('logs'), filename);
-};
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
