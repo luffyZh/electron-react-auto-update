@@ -24,16 +24,21 @@ async function sleep(ms: number) {
   });
 }
 
-export async function autoUpdateInit(mainWindow: BrowserWindow) {
-  // 打印log到本地
-  logger.transports.file.maxSize = 1002430; // 10M
-  logger.transports.file.format =
-    '[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}]{scope} {text}';
-  logger.transports.file.resolvePath = () =>
-    join(app.getPath('logs'), 'auto-update.log');
+/**
+ * 用户确定是否下载更新
+ */
+export function downloadUpdate() {
+  autoUpdater.downloadUpdate();
+}
 
-  await sleep(5000);
-  // 每次启动自动更新检查 更新版本 --可以根据自己方式更新，定时或者什么
+/**
+ * 自动更新的逻辑
+ * @param mainWindow
+ */
+export async function autoUpdateApp(mainWindow: BrowserWindow) {
+  // 等待 3 秒再检查更新，确保窗口准备完成，用户进入系统
+  await sleep(3000);
+  // 每次启动自动更新检查更新版本
   autoUpdater.checkForUpdates();
   autoUpdater.logger = logger;
   autoUpdater.disableWebInstaller = false;
@@ -47,8 +52,6 @@ export async function autoUpdateInit(mainWindow: BrowserWindow) {
     logger.info('检查到有更新，开始下载新版本');
     logger.info(info);
     mainWindow.webContents.send('update-available', info);
-    // const { version } = info;
-    askUpdate(info.version);
   });
   // 当没有可用更新的时候触发，其实就是啥也不用做
   autoUpdater.on('update-not-available', () => {

@@ -139,12 +139,10 @@ app.on('window-all-closed', () => {
 app
   .whenReady()
   .then(() => {
+    // 创建窗口
     createWindow();
-<<<<<<< HEAD
-    autoUpdateApp();
-=======
-    autoUpdateInit(mainWindow as BrowserWindow);
->>>>>>> 985e4fd (feat: initial project)
+    // 检查更新
+    autoUpdateApp(mainWindow as BrowserWindow);
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.

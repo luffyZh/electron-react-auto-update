@@ -8,6 +8,8 @@ export type Channels =
   | 'update'
   | 'download-progress'
   | 'downloaded'
+  // 确定下载更新
+  | 'confirm-download'
   | 'update-downloaded'
   | 'update-available';
 

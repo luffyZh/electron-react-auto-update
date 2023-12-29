@@ -83,6 +83,7 @@
   "dependencies": {
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
+    "electron-store": "^8.1.0",
     "electron-updater": "^6.1.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -171,13 +172,21 @@
     "win": {
       "target": [
         "nsis"
-      ]
+      ],
+      "publish": {
+        "provider": "generic",
+        "url": "http://localhost:8099/packages/win32/"
+      }
     },
     "linux": {
       "target": [
         "AppImage"
       ],
-      "category": "Development"
+      "category": "Development",
+      "publish": {
+        "provider": "generic",
+        "url": "http://localhost:8099/packages/linux/"
+      }
     },
     "directories": {
       "app": "release/app",
@@ -189,7 +198,7 @@
     ],
     "publish": {
       "provider": "generic",
-      "url": "http://localhost:8099/packages/win32/"
+      "url": "http://localhost:8099/packages/linux/"
     }
   },
   "devEngines": {
