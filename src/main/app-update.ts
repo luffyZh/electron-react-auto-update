@@ -3,7 +3,7 @@
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable import/prefer-default-export */
 // src/main/autoUpdater.js
-import { app, dialog, BrowserWindow } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import { join } from 'path';
 import { autoUpdater } from 'electron-updater';
 import logger from 'electron-log';
@@ -32,6 +32,13 @@ export function downloadUpdate() {
 }
 
 /**
+ * 退出并安装更新
+ */
+export function installUpdate() {
+  autoUpdater.quitAndInstall();
+}
+
+/**
  * 自动更新的逻辑
  * @param mainWindow
  */
@@ -49,8 +56,9 @@ export async function autoUpdateApp(mainWindow: BrowserWindow) {
   });
   // 当有可用更新的时候触发。 更新将自动下载。
   autoUpdater.on('update-available', (info) => {
-    logger.info('检查到有更新，开始下载新版本');
+    logger.info('检查到有更新');
     logger.info(info);
+    // 检查到可用更新，交由用户提示是否下载
     mainWindow.webContents.send('update-available', info);
   });
   // 当没有可用更新的时候触发，其实就是啥也不用做
@@ -60,23 +68,14 @@ export async function autoUpdateApp(mainWindow: BrowserWindow) {
   // 下载更新包的进度，可以用于显示下载进度与前端交互等
   autoUpdater.on('download-progress', async (progress) => {
     logger.info(progress);
+    // 实时同步下载进度到渲染进程，以便于渲染进程显示下载进度
     mainWindow.webContents.send('download-progress', progress);
   });
   // 在更新下载完成的时候触发。
   autoUpdater.on('update-downloaded', (res) => {
     logger.info('下载完毕！提示安装更新');
     logger.info(res);
+    // 下载完成之后，弹出对话框提示用户是否立即安装更新
     mainWindow.webContents.send('update-downloaded', res);
-    // dialog 想要使用，必须在 BrowserWindow 创建之后
-    // dialog
-    //   .showMessageBox({
-    //     title: '升级提示！',
-    //     message: '已为您下载最新应用，点击确定马上替换为最新版本！',
-    //   })
-    //   .then(() => {
-    //     logger.info('退出应用，安装开始！');
-    //     // 重启应用并在下载后安装更新。 它只应在发出 update-downloaded 后方可被调用。
-    //     autoUpdater.quitAndInstall();
-    //   });
   });
 }

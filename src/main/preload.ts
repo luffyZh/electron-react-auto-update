@@ -11,7 +11,8 @@ export type Channels =
   // 确定下载更新
   | 'confirm-download'
   | 'update-downloaded'
-  | 'update-available';
+  | 'update-available'
+  | 'install-update';
 
 const electronHandler = {
   ipcRenderer: {

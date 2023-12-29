@@ -14,7 +14,7 @@ import electronDebug from 'electron-debug';
 import logger from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import { autoUpdateApp } from './app-update';
+import { autoUpdateApp, installUpdate, downloadUpdate } from './app-update';
 
 electronDebug({ showDevTools: false });
 
@@ -35,6 +35,16 @@ ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
+});
+
+// 下载更新
+ipcMain.on('download-update', () => {
+  downloadUpdate();
+});
+
+// 安装更新
+ipcMain.on('install-update', () => {
+  installUpdate();
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -115,9 +125,6 @@ const createWindow = async () => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
-
-  // 打开 devtool
-  mainWindow.webContents.openDevTools();
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
