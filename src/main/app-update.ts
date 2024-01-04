@@ -68,8 +68,10 @@ export async function autoUpdateApp(mainWindow: BrowserWindow) {
   // 下载更新包的进度，可以用于显示下载进度与前端交互等
   autoUpdater.on('download-progress', async (progress) => {
     logger.info(progress);
+    // 计算下载百分比
+    const downloadPercent = Math.round(progress.percent * 100) / 100;
     // 实时同步下载进度到渲染进程，以便于渲染进程显示下载进度
-    mainWindow.webContents.send('download-progress', progress);
+    mainWindow.webContents.send('download-progress', progress.percent);
   });
   // 在更新下载完成的时候触发。
   autoUpdater.on('update-downloaded', (res) => {

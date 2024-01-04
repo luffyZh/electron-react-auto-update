@@ -89,6 +89,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
+    "styled-components": "^6.1.6",
     "update-electron-app": "^3.0.0"
   },
   "devDependencies": {

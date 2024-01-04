@@ -16,7 +16,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { autoUpdateApp, installUpdate, downloadUpdate } from './app-update';
 
-electronDebug({ showDevTools: false });
+electronDebug({ showDevTools: true });
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -38,12 +38,12 @@ ipcMain.on('ipc-example', async (event, arg) => {
 });
 
 // 下载更新
-ipcMain.on('download-update', () => {
+ipcMain.on('download-update', async () => {
   downloadUpdate();
 });
 
 // 安装更新
-ipcMain.on('install-update', () => {
+ipcMain.on('install-update', async () => {
   installUpdate();
 });
 

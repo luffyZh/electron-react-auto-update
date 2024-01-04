@@ -6,10 +6,8 @@ export type Channels =
   | 'ipc-example'
   | 'app-update'
   | 'update'
+  | 'download-update'
   | 'download-progress'
-  | 'downloaded'
-  // 确定下载更新
-  | 'confirm-download'
   | 'update-downloaded'
   | 'update-available'
   | 'install-update';

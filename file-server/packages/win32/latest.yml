@@ -1,8 +1,8 @@
-version: 0.3.6
+version: 0.3.7
 files:
-  - url: ElectronReactAutoUpdate Setup 0.3.6.exe
-    sha512: rsFIsQDxge/BOYbMmErAk73qMjUY5MGLw6RssU7LlQRJaa+mbFBz47/f45GeUCvFXD0TyGfugNP83ay8OTMiIA==
-    size: 73591255
-path: ElectronReactAutoUpdate Setup 0.3.6.exe
-sha512: rsFIsQDxge/BOYbMmErAk73qMjUY5MGLw6RssU7LlQRJaa+mbFBz47/f45GeUCvFXD0TyGfugNP83ay8OTMiIA==
-releaseDate: '2023-12-25T07:52:41.072Z'
+  - url: ElectronReactAutoUpdate Setup 0.3.7.exe
+    sha512: VNCQs/grGpda/f4q5pRVkthfXnk82j9a4CpLlgEMG6cbvuQwZgDvUC9JKwsmZuaU7bco5WKXXA2/xlVEoiEKPA==
+    size: 74236723
+path: ElectronReactAutoUpdate Setup 0.3.7.exe
+sha512: VNCQs/grGpda/f4q5pRVkthfXnk82j9a4CpLlgEMG6cbvuQwZgDvUC9JKwsmZuaU7bco5WKXXA2/xlVEoiEKPA==
+releaseDate: '2024-01-04T02:12:19.054Z'
